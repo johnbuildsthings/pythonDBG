@@ -22,11 +22,14 @@ class debugger():
 
     print path_to_exec
 
-    if kernal64.execl(path_to_exec, path_to_exec):
+    if kernal64.vfork() == 0: 
+    
+      status = kernal64.execl(path_to_exec)
 
+      process_information.dwProcessId = kernal64.getpid()
       print "[*] We have successfully lauched the process!"
       print "[*] PID: %d" % process_information.dwProcessId
-
+      # exit();
     else:
 
-      print "[*] Error: 0x%08x." % kernal64.GetLastErrer()
+      print "[*] Error: 0x%08x." % kernal64.strerror()
